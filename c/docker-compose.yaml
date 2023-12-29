@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      tags:
+        - dev-container:c_cpp
+    container_name: dev-container_c_cpp
+    stdin_open: true 
+    tty: true
+   # command: ["/bin/bash", "-c", "while sleep 1000; do :; done"]
+    volumes:
+      - ./app:/app

@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/app/build",
+  "command": "/usr/bin/clang   -g -std=gnu99 -o CMakeFiles/hello_world.dir/main.c.o -c /app/main.c",
+  "file": "/app/main.c"
+}
+]

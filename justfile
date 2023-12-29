@@ -26,6 +26,13 @@ run-detached:
     docker compose up --detach
 alias rd := run-detached
 
+# Run container detached
+run-shell:
+    @echo "Running interactive shell..."
+    docker compose up --detach
+    docker compose exec app bash
+alias rs := run-shell
+
 # Restart container
 restart:
     @echo "Restarting container..."
