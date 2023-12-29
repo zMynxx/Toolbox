@@ -1,0 +1,27 @@
+# Docker compose is a diclearative way to run one or more containers at once
+# It is a yaml file that defines the containers that are going to be run.
+# Instead of running docker run command with multiple flags and bindings, we can define our yaml once and run docker-compose up.
+# docker-compose up will look for a docker-compose.yml file in the current directory.
+# docker-compose up will build the images if they don't exist and run the containers.
+# docker-compose down will stop the containers and remove them.
+# docker-compose up -d will run the containers in the background.
+# docker-compose logs will show the logs of the containers.
+# docker-compose ps will show the running containers.
+# docker-compose exec <container-name> <command> will run a command in a running container.
+# docker-compose exec app bash will run bash shell in the app container.
+# Check docker-compose documentation: https://docs.docker.com/compose/ for more useful fiels like volumes, networks, env_file, secrets, etc.
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      tags:
+        - dev-container_nodejs
+    container_name: dev-container_nodejs
+    command: ["node", "src/index.js"]
+    ports:
+      - 3000:3000
+    volumes:
+      - ./app:/usr/src/app
