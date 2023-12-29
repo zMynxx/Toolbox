@@ -9,6 +9,9 @@ set ignore-comments := false
 set export
 log := "warn"
 
+## Chooser
+default:
+  @just --choose
 
 ## Playbook Commands
 playbookdir := "./playbooks/"
@@ -59,17 +62,20 @@ install:
 alias i := install
 
 ## SSH Commands
+home_dir := env('HOME', '~')
+user := env('USER', 'ansible')
+
 # Create the SSH key pair
 ssh-key:
     @echo "Creating SSH key pair..."
-    @ssh-keygen -t rsa -b 4096 -N "" -C "$USER@$HOSTNAME" -f $HOME/.ssh/ansible
+    @ssh-keygen -t rsa -b 4096 -N "" -C "{{user}}@$(hostname)" -f {{home_dir}}/.ssh/ansible
 
 # Add ansible public key to authorized keys
 set-public-key:
     @echo "Setting public key..."
-    @cat $HOME/.ssh/ansible.pub >> $HOME/.ssh/authorized_keys
+    @cat {{home_dir}}/.ssh/ansible.pub >> {{home_dir}}/.ssh/authorized_keys
 
 # Run the clean command
 clean:
     @echo "Cleaning..."
-    @rm -rf $HOME/.ssh/ansible*
+    @rm -rf {{home_dir}}/.ssh/ansible*
