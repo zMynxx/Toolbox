@@ -8,20 +8,19 @@ set dotenv-load := true
 set ignore-comments := false
 log := "warn"
 
-alias b := build
+set export
+# export DOCKER_BUILDKIT=1
 
 # Run the build command
 build:
     @echo "Building..."
+    docker build --secret id=secrets,src=$(pwd)/.secrets -t docker-secret .
+
+ssh:
+    @echo "Building..."
+    docker build --ssh default -t docker-secret .
 
 # Run the test command
-test:
-    @echo "Test"
-
-# Use env vars
-env:
-    @echo "$GHUSER"
-
-# Run the clean command
-clean:
-    @echo "Cleaning..."
+history:
+    @echo "History..."
+    docker history docker-secret
