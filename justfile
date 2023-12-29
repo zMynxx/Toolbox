@@ -15,10 +15,10 @@ playbookdir := "./playbooks/"
 playbookfile := playbookdir + "docker.yaml"
 
 # Run the playbook command
-playbook:
+play *PLAYBOOK :
     @echo "playbooking..."
-    @ansible-playbook $playbookfile
-alias p := playbook
+    @ansible-playbook -b ./playbooks/{{ PLAYBOOK }} --verbose
+alias p := play
 
 ## Ansible Vault Commands
 vaultfile := "vault.yaml"
