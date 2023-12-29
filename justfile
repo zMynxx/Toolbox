@@ -10,6 +10,10 @@ log := "warn"
 
 alias b := build
 
+## Chooser
+default:
+  @just --choose
+
 # Run the build command
 build:
     @echo "Building..."
