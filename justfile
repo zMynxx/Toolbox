@@ -62,7 +62,7 @@ alias i := install
 # Create the SSH key pair
 ssh-key:
     @echo "Creating SSH key pair..."
-    @ssh-keygen -t rsa -b 4096 -C "ansible@localhost" -f $HOME/.ssh/ansible
+    @ssh-keygen -t rsa -b 4096 -N "" -C "$USER@$HOSTNAME" -f $HOME/.ssh/ansible
 
 # Add ansible public key to authorized keys
 set-public-key:
