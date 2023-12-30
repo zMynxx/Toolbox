@@ -1,0 +1,16 @@
+- name: create ansible user
+  become: true
+  become_method: sudo
+  ansible.builtin.user:
+    name: ansible
+    system: yes
+
+- name: copy sudeors_ansible
+  become: true
+  become_method: sudo
+  ansible.builtin.copy:
+    src: files/sudoers_ansible
+    dest: /etc/sudoers.d/ansible
+    owner: root
+    group: wheel
+    mode: 0440

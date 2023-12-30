@@ -1,0 +1,7 @@
+- name: update homebrew
+  ansible.builtin.homebrew:
+    state: latest
+    # name: homebrew/cask
+    update_homebrew: yes
+    upgrade_all: yes
+    install_options: force
