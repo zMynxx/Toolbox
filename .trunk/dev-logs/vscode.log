@@ -1,3 +1,4 @@
 2023-12-30T00:27:49.205Z [[34mdebug[39m] Starting Trunk language client with run config: {"command":"/Users/develeap/.cache/trunk/launcher/trunk","args":["lsp-proxy"],"options":{"cwd":"/Users/develeap/Desktop/Lior/Toolbox","detached":false,"shell":false}}
 2023-12-30T01:01:48.537Z [[31merror[39m] Failed to get available upgrades: Error: Client is not running
 2023-12-30T01:01:51.547Z [[34mdebug[39m] Starting Trunk language client with run config: {"command":"/Users/develeap/.cache/trunk/launcher/trunk","args":["lsp-proxy"],"options":{"cwd":"/Users/develeap/Desktop/Lior/Toolbox","detached":false,"shell":false}}
+2023-12-30T02:04:52.179Z [[31merror[39m] Channel has been closed
