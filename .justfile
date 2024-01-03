@@ -10,7 +10,9 @@ log := "warn"
 
 alias b := build
 
-## Chooser
+#############
+## Chooser ##
+#############
 default:
   @just --choose
 
