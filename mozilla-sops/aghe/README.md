@@ -72,7 +72,23 @@ echo -e 'export SOPS_AGE_KEY_FILE="$HOME/.age/key.txt"' >> $HOME/.zshrc
 source $HOME/.zshrc
 ```
 
-## Method 3 - Create a .sopsrc file
+## Method 3 - Create a .sops.yaml file (Only for the CLI)
+
+.sops.yaml file is a configuration file for sops. It can be used to specify the age key file path, and other configuration options.
+This file will be looked up in the current directory, and all parent directories.
+
+```yaml
+# creation rules are evaluated sequentially, the first match wins
+creation_rules:
+  # upon creation of a file that matches the pattern *.yaml,
+  # and age is used
+  - path_regex: .yaml$
+
+  ## This key is the public key of the age key pair
+  - age: "age1zs3q2vfmr4vy4zw2h5tysnrs73rvmaf6xxx9wut6v0ft0sya9d8qsw2d6f"
+```
+
+## Method 4 - Create a .sopsrc file (Only for the VSCode extension)
 
 .sopsrc file is a configuration file for sops. It can be used to specify the age key file path, and other configuration options.
 
