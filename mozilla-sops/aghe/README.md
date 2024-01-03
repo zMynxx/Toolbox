@@ -4,13 +4,27 @@ Age is a simple, modern and secure file encryption tool, format, and Go library.
 
 [Official github reposiory](https://github.com/FiloSottile/age)
 
-## Installation
+---
+
+# Table of Contents
+
+1. [Installation](#installation)
+2. [Usage examples](#usage-examples)
+3. [Getting Started](#getting-started)
+4. [Configurations](#configurations)
+5. [Further examples](#further-examples)
+6. [VSCode extension](#vscode-extension)
+7. [IMPORTANT - Do not commit the secrets to git](#important---do-not-commit-the-secrets-to-git)
+
+---
+
+# Installation
 
 ```bash
 brew install age
 ```
 
-## Usage examples
+# Usage examples
 
 ```bash
 ## Generate a key (Public key will be printed)
@@ -24,7 +38,7 @@ $ tar cvz ~/data | age --recipient age1ql3z7hjy54pw3hyww5ayyfg7zqgvc7w3j2elw8zmr
 $ age --decrypt --identity key.txt data.tar.gz.age > data.tar.gz
 ```
 
-## Recommended usage
+# Getting Started
 
 ```bash
 ## Create a hidden directory to store the key
@@ -33,12 +47,74 @@ mkdir -p $HOME/.age
 ## Generate a key and store it in the hidden directory
 age-keygen --output $HOME/.age/key.txt
 Public key: age1zs3q2vfmr4vy4zw2h5tysnrs73rvmaf6xxx9wut6v0ft0sya9d8qsw2d6f
+```
 
+---
 
-## Export the key file path as an environment variable
+# Configurations
+
+## Set the key file you want
+
+### Method 1 - Export the key file path
+
+Export the key file path as an environment variable.
+
+```bash
 export AGE_KEY_FILE=$HOME/.age/key.txt
+```
 
-## Better - Export the key file path as an environment variable, on shell startup
-echo -e 'export SOPS_AGE_KEY_FILE=$HOME/.age/key.txt' >> $HOME/.zshrc
+### Method 2 - Shell Configuration
+
+Export the key file path as an environment variable, on shell startup.
+
+```bash
+echo -e 'export SOPS_AGE_KEY_FILE="$HOME/.age/key.txt"' >> $HOME/.zshrc
 source $HOME/.zshrc
 ```
+
+## Method 3 - Create a .sopsrc file
+
+.sopsrc file is a configuration file for sops. It can be used to specify the age key file path, and other configuration options.
+
+```yaml
+awsProfile: my-profile-1
+gcpCredentialsPath: /home/user/Downloads/my-key.json
+ageKeyFile: /home/user/age.txt
+```
+
+---
+
+## Further examples
+
+```bash
+## Create a k8s secret
+kubectl create secret generic sops-aghe-secret-example --from-literal=SECRET1=password --from-literal=SECRET2=securepassword --dry-run=client -o yaml > secrets.yaml
+
+## Encrypt using sops and age (MacOS)
+#--age-recipient-file $HOME/.age/key.txt
+sops --encrypt --age $(cat $SOPS_AGE_KEY_FILE | grep -o "public key: .*" | awk '{print $NF}') --encrypted-regex '^(data|stringData)$' --in-place ./secrets.yaml
+
+## Decrypt using sops and age (MacOS)
+sops --decrypt --age $(cat $SOPS_AGE_KEY_FILE | grep -o "public key: .*" | awk '{print $NF}') --encrypted-regex '^(data|stringData)$' --in-place ./secrets.yaml
+```
+
+## [VSCode extension](https://marketplace.visualstudio.com/items?itemName=signageos.signageos-vscode-sops)
+
+```yaml
+Name: @signageos/vscode-sops
+Id: signageos.signageos-vscode-sops
+Description:
+Version: 0.8.0
+Publisher: signageOS.io
+VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=signageos.signageos-vscode-sops
+```
+
+# IMPORTANT - Do not commit the secrets to git
+
+Make sure to have in your `.gitignore` file the following line:
+
+```bash
+*.decrypted~*
+```
+
+This will prevent any of the decrypted secrets from being committed to git using regex.
